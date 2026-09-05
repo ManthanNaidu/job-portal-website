@@ -11,12 +11,20 @@
    - Role management
    - Logout
    - Authentication checks
-   - Password hashing
 
-   IMPORTANT:
-   This is a frontend-only prototype.
-   Production authentication must be handled server-side.
+   Frontend prototype:
+   - Uses localStorage through storage-service.js
+   - Uses Web Crypto SHA-256 for prototype password hashing
+
+   Production:
+   - Authentication must be moved to a backend.
    ========================================================= */
+
+import {
+    get,
+    set,
+    remove
+} from "../services/storage-service.js";
 
 
 /* =========================================================
@@ -24,13 +32,9 @@
    ========================================================= */
 
 const STORAGE_KEYS = Object.freeze({
-
-    EMPLOYEES: "hiresphere_employees",
-
-    RECRUITERS: "hiresphere_recruiters",
-
-    SESSION: "hiresphere_session"
-
+    EMPLOYEES: "employees",
+    RECRUITERS: "recruiters",
+    SESSION: "session"
 });
 
 
@@ -39,65 +43,9 @@ const STORAGE_KEYS = Object.freeze({
    ========================================================= */
 
 export const ROLES = Object.freeze({
-
     EMPLOYEE: "employee",
-
     RECRUITER: "recruiter"
-
 });
-
-
-/* =========================================================
-   INTERNAL STORAGE HELPERS
-   ========================================================= */
-
-function readStorage(key, fallback = []) {
-
-    try {
-
-        const rawData = localStorage.getItem(key);
-
-        if (!rawData) {
-            return fallback;
-        }
-
-        const parsedData = JSON.parse(rawData);
-
-        return parsedData;
-
-    } catch (error) {
-
-        console.error(
-            `HireSphere storage read failed: ${key}`,
-            error
-        );
-
-        return fallback;
-    }
-}
-
-
-function writeStorage(key, data) {
-
-    try {
-
-        localStorage.setItem(
-            key,
-            JSON.stringify(data)
-        );
-
-        return true;
-
-    } catch (error) {
-
-        console.error(
-            `HireSphere storage write failed: ${key}`,
-            error
-        );
-
-        return false;
-    }
-}
 
 
 /* =========================================================
@@ -125,35 +73,33 @@ function normalizeEmail(email) {
 
 
 /* =========================================================
-   PASSWORD HASHING
+   EMAIL VALIDATION
    ========================================================= */
 
-/*
- * Frontend prototype only.
- *
- * Web Crypto SHA-256 is used so passwords are not stored
- * as plain text in localStorage.
- *
- * Production:
- * Use backend authentication with a password hashing
- * algorithm such as Argon2id/bcrypt/scrypt.
- */
+function validateEmail(email) {
 
-async function hashPassword(password) {
+    const pattern =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    const encoder = new TextEncoder();
+    if (!email) {
 
-    const data = encoder.encode(password);
+        return {
+            valid: false,
+            message: "Email address is required."
+        };
+    }
 
-    const hashBuffer =
-        await crypto.subtle.digest("SHA-256", data);
+    if (!pattern.test(email)) {
 
-    const hashArray =
-        Array.from(new Uint8Array(hashBuffer));
+        return {
+            valid: false,
+            message: "Please enter a valid email address."
+        };
+    }
 
-    return hashArray
-        .map(byte => byte.toString(16).padStart(2, "0"))
-        .join("");
+    return {
+        valid: true
+    };
 }
 
 
@@ -169,7 +115,6 @@ function validatePassword(password) {
             valid: false,
             message: "Password is required."
         };
-
     }
 
     if (password.length < 8) {
@@ -178,7 +123,6 @@ function validatePassword(password) {
             valid: false,
             message: "Password must contain at least 8 characters."
         };
-
     }
 
     return {
@@ -188,40 +132,32 @@ function validatePassword(password) {
 
 
 /* =========================================================
-   EMAIL VALIDATION
+   PASSWORD HASH
    ========================================================= */
 
-function validateEmail(email) {
+async function hashPassword(password) {
 
-    const emailPattern =
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const encoder = new TextEncoder();
 
-    if (!email) {
+    const data = encoder.encode(password);
 
-        return {
-            valid: false,
-            message: "Email address is required."
-        };
+    const hashBuffer =
+        await crypto.subtle.digest(
+            "SHA-256",
+            data
+        );
 
-    }
-
-    if (!emailPattern.test(email)) {
-
-        return {
-            valid: false,
-            message: "Please enter a valid email address."
-        };
-
-    }
-
-    return {
-        valid: true
-    };
+    return Array
+        .from(new Uint8Array(hashBuffer))
+        .map(byte =>
+            byte.toString(16).padStart(2, "0")
+        )
+        .join("");
 }
 
 
 /* =========================================================
-   SESSION
+   SESSION CREATION
    ========================================================= */
 
 function createSession(user, role) {
@@ -230,13 +166,7 @@ function createSession(user, role) {
         ...user
     };
 
-    /*
-     * Never expose/store the password hash
-     * inside the active user session.
-     */
-
     delete safeUser.passwordHash;
-
 
     const session = {
 
@@ -248,41 +178,32 @@ function createSession(user, role) {
 
         authenticatedAt:
             new Date().toISOString()
-
     };
 
+    const saved =
+        set(
+            STORAGE_KEYS.SESSION,
+            session
+        );
 
-    const saved = writeStorage(
-        STORAGE_KEYS.SESSION,
-        session
-    );
-
-
-    if (!saved) {
-        return null;
-    }
-
-
-    return session;
+    return saved
+        ? session
+        : null;
 }
 
 
 /* =========================================================
-   GET CURRENT SESSION
+   SESSION ACCESS
    ========================================================= */
 
 export function getCurrentSession() {
 
-    return readStorage(
+    return get(
         STORAGE_KEYS.SESSION,
         null
     );
 }
 
-
-/* =========================================================
-   GET CURRENT USER
-   ========================================================= */
 
 export function getCurrentUser() {
 
@@ -293,10 +214,6 @@ export function getCurrentUser() {
 }
 
 
-/* =========================================================
-   GET CURRENT ROLE
-   ========================================================= */
-
 export function getCurrentRole() {
 
     const session =
@@ -306,10 +223,6 @@ export function getCurrentRole() {
 }
 
 
-/* =========================================================
-   AUTHENTICATION STATUS
-   ========================================================= */
-
 export function isAuthenticated() {
 
     return Boolean(
@@ -317,10 +230,6 @@ export function isAuthenticated() {
     );
 }
 
-
-/* =========================================================
-   ROLE CHECKS
-   ========================================================= */
 
 export function isEmployee() {
 
@@ -335,30 +244,40 @@ export function isRecruiter() {
 
 
 /* =========================================================
-   REGISTER EMPLOYEE
+   EMPLOYEE REGISTRATION
    ========================================================= */
 
-export async function registerEmployee(employeeData) {
+export async function registerEmployee(
+    employeeData
+) {
 
     const firstName =
-        String(employeeData?.firstName || "").trim();
+        String(
+            employeeData?.firstName || ""
+        ).trim();
 
     const lastName =
-        String(employeeData?.lastName || "").trim();
+        String(
+            employeeData?.lastName || ""
+        ).trim();
 
     const email =
-        normalizeEmail(employeeData?.email);
+        normalizeEmail(
+            employeeData?.email
+        );
 
     const password =
-        String(employeeData?.password || "");
+        String(
+            employeeData?.password || ""
+        );
 
     const confirmPassword =
-        String(employeeData?.confirmPassword || "");
+        String(
+            employeeData?.confirmPassword || ""
+        );
 
 
-    /* -------------------------
-       Basic validation
-    -------------------------- */
+    /* Validation */
 
     if (!firstName) {
 
@@ -411,55 +330,47 @@ export async function registerEmployee(employeeData) {
     }
 
 
-    /* -------------------------
-       Check duplicate email
-    -------------------------- */
+    /* Existing accounts */
 
     const employees =
-        readStorage(
-            STORAGE_KEYS.EMPLOYEES
+        get(
+            STORAGE_KEYS.EMPLOYEES,
+            []
         );
 
     const recruiters =
-        readStorage(
-            STORAGE_KEYS.RECRUITERS
+        get(
+            STORAGE_KEYS.RECRUITERS,
+            []
         );
 
 
-    const employeeExists =
+    const emailExists =
         employees.some(
-            employee =>
-                employee.email === email
-        );
-
-
-    const recruiterExists =
+            user => user.email === email
+        ) ||
         recruiters.some(
-            recruiter =>
-                recruiter.email === email
+            user => user.email === email
         );
 
 
-    if (employeeExists || recruiterExists) {
+    if (emailExists) {
 
         return {
             success: false,
-            message: "An account with this email already exists."
+            message:
+                "An account with this email already exists."
         };
     }
 
 
-    /* -------------------------
-       Hash password
-    -------------------------- */
+    /* Hash password */
 
     const passwordHash =
         await hashPassword(password);
 
 
-    /* -------------------------
-       Create employee
-    -------------------------- */
+    /* Create employee */
 
     const employee = {
 
@@ -493,7 +404,9 @@ export async function registerEmployee(employeeData) {
             ).trim(),
 
         skills:
-            Array.isArray(employeeData?.skills)
+            Array.isArray(
+                employeeData?.skills
+            )
                 ? employeeData.skills
                 : [],
 
@@ -508,7 +421,7 @@ export async function registerEmployee(employeeData) {
 
 
     const saved =
-        writeStorage(
+        set(
             STORAGE_KEYS.EMPLOYEES,
             employees
         );
@@ -518,7 +431,8 @@ export async function registerEmployee(employeeData) {
 
         return {
             success: false,
-            message: "Unable to create employee account."
+            message:
+                "Unable to create employee account."
         };
     }
 
@@ -531,10 +445,15 @@ export async function registerEmployee(employeeData) {
             "Employee account created successfully.",
 
         user: {
+
             id: employee.id,
+
             role: employee.role,
+
             firstName: employee.firstName,
+
             lastName: employee.lastName,
+
             email: employee.email
         }
     };
@@ -542,10 +461,12 @@ export async function registerEmployee(employeeData) {
 
 
 /* =========================================================
-   REGISTER RECRUITER
+   RECRUITER REGISTRATION
    ========================================================= */
 
-export async function registerRecruiter(recruiterData) {
+export async function registerRecruiter(
+    recruiterData
+) {
 
     const name =
         String(
@@ -573,15 +494,14 @@ export async function registerRecruiter(recruiterData) {
         ).trim();
 
 
-    /* -------------------------
-       Basic validation
-    -------------------------- */
+    /* Validation */
 
     if (!name) {
 
         return {
             success: false,
-            message: "Recruiter name is required."
+            message:
+                "Recruiter name is required."
         };
     }
 
@@ -623,60 +543,53 @@ export async function registerRecruiter(recruiterData) {
 
         return {
             success: false,
-            message: "Company name is required."
+            message:
+                "Company name is required."
         };
     }
 
 
-    /* -------------------------
-       Check duplicate email
-    -------------------------- */
+    /* Existing accounts */
 
     const employees =
-        readStorage(
-            STORAGE_KEYS.EMPLOYEES
+        get(
+            STORAGE_KEYS.EMPLOYEES,
+            []
         );
 
     const recruiters =
-        readStorage(
-            STORAGE_KEYS.RECRUITERS
+        get(
+            STORAGE_KEYS.RECRUITERS,
+            []
         );
 
 
-    const employeeExists =
+    const emailExists =
         employees.some(
-            employee =>
-                employee.email === email
-        );
-
-
-    const recruiterExists =
+            user => user.email === email
+        ) ||
         recruiters.some(
-            recruiter =>
-                recruiter.email === email
+            user => user.email === email
         );
 
 
-    if (employeeExists || recruiterExists) {
+    if (emailExists) {
 
         return {
             success: false,
-            message: "An account with this email already exists."
+            message:
+                "An account with this email already exists."
         };
     }
 
 
-    /* -------------------------
-       Hash password
-    -------------------------- */
+    /* Hash password */
 
     const passwordHash =
         await hashPassword(password);
 
 
-    /* -------------------------
-       Create recruiter
-    -------------------------- */
+    /* Create recruiter */
 
     const recruiter = {
 
@@ -721,7 +634,7 @@ export async function registerRecruiter(recruiterData) {
 
 
     const saved =
-        writeStorage(
+        set(
             STORAGE_KEYS.RECRUITERS,
             recruiters
         );
@@ -731,7 +644,8 @@ export async function registerRecruiter(recruiterData) {
 
         return {
             success: false,
-            message: "Unable to create recruiter account."
+            message:
+                "Unable to create recruiter account."
         };
     }
 
@@ -753,7 +667,8 @@ export async function registerRecruiter(recruiterData) {
 
             email: recruiter.email,
 
-            companyName: recruiter.companyName
+            companyName:
+                recruiter.companyName
         }
     };
 }
@@ -794,15 +709,17 @@ export async function loginEmployee(
 
 
     const employees =
-        readStorage(
-            STORAGE_KEYS.EMPLOYEES
+        get(
+            STORAGE_KEYS.EMPLOYEES,
+            []
         );
 
 
     const employee =
         employees.find(
             user =>
-                user.email === normalizedEmail
+                user.email ===
+                normalizedEmail
         );
 
 
@@ -810,7 +727,8 @@ export async function loginEmployee(
 
         return {
             success: false,
-            message: "Invalid employee email or password."
+            message:
+                "Invalid employee email or password."
         };
     }
 
@@ -826,7 +744,8 @@ export async function loginEmployee(
 
         return {
             success: false,
-            message: "Invalid employee email or password."
+            message:
+                "Invalid employee email or password."
         };
     }
 
@@ -842,7 +761,8 @@ export async function loginEmployee(
 
         return {
             success: false,
-            message: "Unable to create login session."
+            message:
+                "Unable to create login session."
         };
     }
 
@@ -894,15 +814,17 @@ export async function loginRecruiter(
 
 
     const recruiters =
-        readStorage(
-            STORAGE_KEYS.RECRUITERS
+        get(
+            STORAGE_KEYS.RECRUITERS,
+            []
         );
 
 
     const recruiter =
         recruiters.find(
             user =>
-                user.email === normalizedEmail
+                user.email ===
+                normalizedEmail
         );
 
 
@@ -910,7 +832,8 @@ export async function loginRecruiter(
 
         return {
             success: false,
-            message: "Invalid recruiter email or password."
+            message:
+                "Invalid recruiter email or password."
         };
     }
 
@@ -926,7 +849,8 @@ export async function loginRecruiter(
 
         return {
             success: false,
-            message: "Invalid recruiter email or password."
+            message:
+                "Invalid recruiter email or password."
         };
     }
 
@@ -942,7 +866,8 @@ export async function loginRecruiter(
 
         return {
             success: false,
-            message: "Unable to create login session."
+            message:
+                "Unable to create login session."
         };
     }
 
@@ -965,14 +890,14 @@ export async function loginRecruiter(
 
 export function logout() {
 
-    localStorage.removeItem(
+    return remove(
         STORAGE_KEYS.SESSION
     );
 }
 
 
 /* =========================================================
-   DASHBOARD REDIRECTION
+   ROLE-BASED ROUTING
    ========================================================= */
 
 export function getDashboardPath(role) {
@@ -980,27 +905,24 @@ export function getDashboardPath(role) {
     switch (role) {
 
         case ROLES.EMPLOYEE:
-
-            return "../index.html";
-
+            return "../../index.html";
 
         case ROLES.RECRUITER:
-
             return "../recruiter/dashboard.html";
 
-
         default:
-
             return "../auth/employee-login.html";
     }
 }
 
 
 /* =========================================================
-   ROLE-BASED ACCESS
+   ROUTE PROTECTION
    ========================================================= */
 
-export function requireAuth(requiredRole = null) {
+export function requireAuth(
+    requiredRole = null
+) {
 
     const session =
         getCurrentSession();
@@ -1009,9 +931,14 @@ export function requireAuth(requiredRole = null) {
     if (!session) {
 
         return {
+
             allowed: false,
-            reason: "NOT_AUTHENTICATED",
+
+            reason:
+                "NOT_AUTHENTICATED",
+
             role: null,
+
             user: null
         };
     }
@@ -1023,9 +950,14 @@ export function requireAuth(requiredRole = null) {
     ) {
 
         return {
+
             allowed: false,
-            reason: "INVALID_ROLE",
+
+            reason:
+                "INVALID_ROLE",
+
             role: session.role,
+
             user: session.user
         };
     }
@@ -1035,7 +967,8 @@ export function requireAuth(requiredRole = null) {
 
         allowed: true,
 
-        reason: "AUTHORIZED",
+        reason:
+            "AUTHORIZED",
 
         role: session.role,
 
