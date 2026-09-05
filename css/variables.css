@@ -1,0 +1,255 @@
+/* =========================================================
+   HIRESPHERE — DESIGN TOKENS
+   File: css/variables.css
+   Purpose: Single source of truth for the visual system
+   ========================================================= */
+
+:root {
+
+    /* =====================================================
+       BRAND
+       ===================================================== */
+
+    --hs-primary: #6D4AFF;
+    --hs-primary-hover: #5B3BE4;
+    --hs-primary-active: #4D31C9;
+    --hs-primary-soft: #F0ECFF;
+    --hs-primary-softer: #F7F5FF;
+
+    --hs-violet: #8B5CF6;
+    --hs-lavender: #EDE7FF;
+
+    --hs-pink: #F472B6;
+    --hs-pink-soft: #FFF0F7;
+
+    --hs-blue: #5B8DEF;
+    --hs-blue-soft: #EDF4FF;
+
+    --hs-mint: #43C7A2;
+    --hs-mint-soft: #EAF9F4;
+
+    --hs-gold: #F4B740;
+    --hs-gold-soft: #FFF6E5;
+
+    /* =====================================================
+       BACKGROUNDS
+       ===================================================== */
+
+    --hs-bg: #F7F8FC;
+    --hs-bg-soft: #FBFBFD;
+    --hs-bg-tint: #F4F3FA;
+
+    --hs-surface: #FFFFFF;
+    --hs-surface-raised: #FFFFFF;
+    --hs-surface-soft: #FAFAFD;
+
+    /* =====================================================
+       TEXT
+       ===================================================== */
+
+    --hs-text-primary: #17152B;
+    --hs-text-secondary: #656278;
+    --hs-text-tertiary: #858197;
+    --hs-text-muted: #A19EAF;
+    --hs-text-disabled: #BCBAC6;
+    --hs-text-inverse: #FFFFFF;
+
+    /* =====================================================
+       BORDERS
+       ===================================================== */
+
+    --hs-border: #E8E7EF;
+    --hs-border-light: #F0EFF5;
+    --hs-border-strong: #DCD9E7;
+
+    /* =====================================================
+       SEMANTIC
+       ===================================================== */
+
+    --hs-success: #1FA774;
+    --hs-success-soft: #E9F8F2;
+
+    --hs-warning: #E8A52A;
+    --hs-warning-soft: #FFF5DE;
+
+    --hs-danger: #DF5968;
+    --hs-danger-soft: #FDECEF;
+
+    --hs-info: #4D83E7;
+    --hs-info-soft: #ECF3FF;
+
+    /* =====================================================
+       GRADIENTS
+       ===================================================== */
+
+    --hs-gradient-brand:
+        linear-gradient(
+            135deg,
+            #6D4AFF 0%,
+            #8B5CF6 48%,
+            #F472B6 100%
+        );
+
+    --hs-gradient-soft:
+        linear-gradient(
+            135deg,
+            #F2EEFF 0%,
+            #FCEFFC 100%
+        );
+
+    --hs-gradient-hero:
+        linear-gradient(
+            135deg,
+            #F1EDFF 0%,
+            #F9EFFA 48%,
+            #FFF4E9 100%
+        );
+
+    --hs-gradient-success:
+        linear-gradient(
+            135deg,
+            #E8FAF3 0%,
+            #F1FCF8 100%
+        );
+
+    /* =====================================================
+       TYPOGRAPHY
+       ===================================================== */
+
+    --hs-font-sans:
+        Inter,
+        ui-sans-serif,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    --hs-font-display:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    --hs-font-mono:
+        "SFMono-Regular",
+        Consolas,
+        "Liberation Mono",
+        monospace;
+
+    /* Font sizes */
+
+    --hs-text-xs: 0.75rem;       /* 12px */
+    --hs-text-sm: 0.8125rem;    /* 13px */
+    --hs-text-md: 0.875rem;      /* 14px */
+    --hs-text-base: 1rem;        /* 16px */
+    --hs-text-lg: 1.125rem;      /* 18px */
+    --hs-text-xl: 1.25rem;       /* 20px */
+    --hs-text-2xl: 1.5rem;       /* 24px */
+    --hs-text-3xl: 1.875rem;     /* 30px */
+    --hs-text-4xl: 2.25rem;      /* 36px */
+    --hs-text-5xl: 3rem;         /* 48px */
+    --hs-text-6xl: 4rem;         /* 64px */
+
+    /* Weights */
+
+    --hs-weight-regular: 400;
+    --hs-weight-medium: 500;
+    --hs-weight-semibold: 600;
+    --hs-weight-bold: 700;
+
+    /* Line heights */
+
+    --hs-leading-tight: 1.15;
+    --hs-leading-snug: 1.3;
+    --hs-leading-normal: 1.5;
+    --hs-leading-relaxed: 1.7;
+
+    /* =====================================================
+       SPACING
+       ===================================================== */
+
+    --hs-space-1: 4px;
+    --hs-space-2: 8px;
+    --hs-space-3: 12px;
+    --hs-space-4: 16px;
+    --hs-space-5: 20px;
+    --hs-space-6: 24px;
+    --hs-space-8: 32px;
+    --hs-space-10: 40px;
+    --hs-space-12: 48px;
+    --hs-space-16: 64px;
+    --hs-space-20: 80px;
+    --hs-space-24: 96px;
+
+    /* =====================================================
+       RADIUS
+       ===================================================== */
+
+    --hs-radius-xs: 6px;
+    --hs-radius-sm: 10px;
+    --hs-radius-md: 14px;
+    --hs-radius-lg: 18px;
+    --hs-radius-xl: 24px;
+    --hs-radius-2xl: 30px;
+    --hs-radius-pill: 999px;
+
+    /* =====================================================
+       SHADOWS
+       ===================================================== */
+
+    --hs-shadow-xs:
+        0 1px 3px rgba(35, 28, 72, 0.04);
+
+    --hs-shadow-sm:
+        0 4px 12px rgba(35, 28, 72, 0.05);
+
+    --hs-shadow-md:
+        0 8px 24px rgba(35, 28, 72, 0.07);
+
+    --hs-shadow-lg:
+        0 16px 40px rgba(35, 28, 72, 0.10);
+
+    --hs-shadow-xl:
+        0 24px 60px rgba(35, 28, 72, 0.12);
+
+    /* =====================================================
+       LAYOUT
+       ===================================================== */
+
+    --hs-sidebar-width: 192px;
+    --hs-sidebar-collapsed-width: 76px;
+    --hs-header-height: 72px;
+
+    --hs-content-max-width: 1480px;
+    --hs-content-padding: 24px;
+
+    /* =====================================================
+       CONTROLS
+       ===================================================== */
+
+    --hs-input-height: 46px;
+    --hs-button-height: 44px;
+    --hs-button-height-sm: 38px;
+    --hs-button-height-lg: 52px;
+
+    /* =====================================================
+       TRANSITIONS
+       ===================================================== */
+
+    --hs-duration-fast: 150ms;
+    --hs-duration-normal: 220ms;
+    --hs-duration-slow: 350ms;
+
+    --hs-ease:
+        cubic-bezier(0.2, 0.8, 0.2, 1);
+
+    /* =====================================================
+       Z-INDEX
+       ===================================================== */
+
+    --hs-z-base: 1;
+    --hs-z-dropdown: 100;
+    --hs-z-sticky: 200;
+    --hs-z-overlay: 300;
+    --hs-z-modal: 400;
+    --hs-z-toast: 500;
+}
