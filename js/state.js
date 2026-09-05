@@ -1,284 +1,239 @@
-/* =========================================================
-   HIRESPHERE — GLOBAL APPLICATION STATE
-   File: js/state.js
+/**
+ * HireSphere Global Application State
+ * ------------------------------------
+ * Shared client-side state for:
+ * - Authentication
+ * - Jobs
+ * - Companies
+ * - Saved jobs
+ * - Applications
+ * - Alerts
+ * - Notifications
+ * - Career intelligence
+ */
 
-   Responsibility:
-   - Maintain shared client-side application state
-   - Keep authentication state in sync
-   - Store current user information
-   - Store jobs, saved jobs and applications
-   - Provide controlled state updates
-   ========================================================= */
-
+import {
+  getCurrentSession,
+  getCurrentUser,
+  getCurrentRole,
+  isAuthenticated
+} from "./auth/auth.js";
 
 /* =========================================================
    INITIAL STATE
-   ========================================================= */
+========================================================= */
 
 const initialState = {
-    auth: {
-        isAuthenticated: false,
-        role: null,
-        user: null
-    },
+  auth: {
+    isAuthenticated: false,
+    role: null,
+    user: null,
+    session: null
+  },
 
-    jobs: [],
+  jobs: [],
 
-    companies: [],
+  companies: [],
 
-    savedJobs: [],
+  savedJobs: [],
 
-    applications: [],
+  applications: [],
 
-    jobAlerts: [],
+  jobAlerts: [],
 
-    notifications: [],
+  notifications: [],
 
-    career: {
-        score: 0,
-        matchScore: 0,
-        skillGaps: [],
-        recommendations: []
-    }
+  career: {
+    score: 0,
+    matchScore: 0,
+    skillGaps: [],
+    recommendations: []
+  }
 };
 
-
 /* =========================================================
-   CREATE APPLICATION STATE
-   ========================================================= */
+   GLOBAL STATE
+========================================================= */
 
 export const AppState = structuredClone(initialState);
 
-
 /* =========================================================
    AUTH STATE
-   ========================================================= */
+========================================================= */
 
-export function setAuthState({
-    isAuthenticated,
-    role = null,
-    user = null
-}) {
+/**
+ * Synchronize authentication state from auth.js.
+ */
+export function syncAuthState() {
+  const authenticated = isAuthenticated();
 
-    AppState.auth.isAuthenticated =
-        Boolean(isAuthenticated);
+  if (!authenticated) {
+    clearAuthState();
+    return AppState.auth;
+  }
 
-    AppState.auth.role =
-        role;
+  AppState.auth = {
+    isAuthenticated: true,
+    role: getCurrentRole(),
+    user: getCurrentUser(),
+    session: getCurrentSession()
+  };
 
-    AppState.auth.user =
-        user;
+  return AppState.auth;
 }
 
+/**
+ * Set authentication state manually.
+ *
+ * @param {Object} authData
+ */
+export function setAuthState(authData = {}) {
+  AppState.auth = {
+    isAuthenticated: Boolean(authData.isAuthenticated),
+    role: authData.role || null,
+    user: authData.user || null,
+    session: authData.session || null
+  };
+}
 
-/* =========================================================
-   CLEAR AUTH STATE
-   ========================================================= */
-
+/**
+ * Clear authentication state.
+ */
 export function clearAuthState() {
-
-    AppState.auth.isAuthenticated = false;
-
-    AppState.auth.role = null;
-
-    AppState.auth.user = null;
+  AppState.auth = {
+    isAuthenticated: false,
+    role: null,
+    user: null,
+    session: null
+  };
 }
 
-
 /* =========================================================
-   JOB STATE
-   ========================================================= */
+   JOBS
+========================================================= */
 
 export function setJobs(jobs = []) {
-
-    AppState.jobs = Array.isArray(jobs)
-        ? jobs
-        : [];
+  AppState.jobs = Array.isArray(jobs) ? jobs : [];
 }
-
 
 export function getJobs() {
-
-    return AppState.jobs;
+  return AppState.jobs;
 }
-
 
 /* =========================================================
-   COMPANY STATE
-   ========================================================= */
+   COMPANIES
+========================================================= */
 
 export function setCompanies(companies = []) {
-
-    AppState.companies =
-        Array.isArray(companies)
-            ? companies
-            : [];
+  AppState.companies = Array.isArray(companies)
+    ? companies
+    : [];
 }
-
 
 export function getCompanies() {
-
-    return AppState.companies;
+  return AppState.companies;
 }
-
 
 /* =========================================================
    SAVED JOBS
-   ========================================================= */
+========================================================= */
 
-export function setSavedJobs(jobs = []) {
-
-    AppState.savedJobs =
-        Array.isArray(jobs)
-            ? jobs
-            : [];
+export function setSavedJobs(savedJobs = []) {
+  AppState.savedJobs = Array.isArray(savedJobs)
+    ? savedJobs
+    : [];
 }
 
+export function getSavedJobs() {
+  return AppState.savedJobs;
+}
 
 export function addSavedJob(jobId) {
+  if (!jobId) {
+    return;
+  }
 
-    if (!jobId) {
-        return;
-    }
-
-    if (
-        !AppState.savedJobs.includes(jobId)
-    ) {
-        AppState.savedJobs.push(jobId);
-    }
+  if (!AppState.savedJobs.includes(jobId)) {
+    AppState.savedJobs.push(jobId);
+  }
 }
-
 
 export function removeSavedJob(jobId) {
-
-    AppState.savedJobs =
-        AppState.savedJobs.filter(
-            id => id !== jobId
-        );
+  AppState.savedJobs = AppState.savedJobs.filter(
+    (id) => id !== jobId
+  );
 }
-
-
-export function isJobSaved(jobId) {
-
-    return AppState.savedJobs.includes(jobId);
-}
-
 
 /* =========================================================
    APPLICATIONS
-   ========================================================= */
+========================================================= */
 
-export function setApplications(
-    applications = []
-) {
-
-    AppState.applications =
-        Array.isArray(applications)
-            ? applications
-            : [];
+export function setApplications(applications = []) {
+  AppState.applications = Array.isArray(applications)
+    ? applications
+    : [];
 }
 
-
-export function addApplication(application) {
-
-    if (!application) {
-        return;
-    }
-
-    AppState.applications.push(application);
+export function getApplications() {
+  return AppState.applications;
 }
-
 
 /* =========================================================
    JOB ALERTS
-   ========================================================= */
+========================================================= */
 
 export function setJobAlerts(alerts = []) {
-
-    AppState.jobAlerts =
-        Array.isArray(alerts)
-            ? alerts
-            : [];
+  AppState.jobAlerts = Array.isArray(alerts)
+    ? alerts
+    : [];
 }
 
+export function getJobAlerts() {
+  return AppState.jobAlerts;
+}
 
 /* =========================================================
    NOTIFICATIONS
-   ========================================================= */
+========================================================= */
 
-export function setNotifications(
-    notifications = []
-) {
-
-    AppState.notifications =
-        Array.isArray(notifications)
-            ? notifications
-            : [];
+export function setNotifications(notifications = []) {
+  AppState.notifications = Array.isArray(notifications)
+    ? notifications
+    : [];
 }
 
-
-/* =========================================================
-   CAREER STATE
-   ========================================================= */
-
-export function updateCareerState(
-    careerData = {}
-) {
-
-    AppState.career = {
-        ...AppState.career,
-        ...careerData
-    };
+export function getNotifications() {
+  return AppState.notifications;
 }
 
+/* =========================================================
+   CAREER INTELLIGENCE
+========================================================= */
+
+export function updateCareerState(careerData = {}) {
+  AppState.career = {
+    ...AppState.career,
+    ...careerData
+  };
+}
+
+export function getCareerState() {
+  return AppState.career;
+}
 
 /* =========================================================
-   RESET APPLICATION STATE
-   ========================================================= */
+   RESET
+========================================================= */
 
 export function resetAppState() {
-
-    AppState.auth = {
-        ...initialState.auth
-    };
-
-    AppState.jobs = [];
-
-    AppState.companies = [];
-
-    AppState.savedJobs = [];
-
-    AppState.applications = [];
-
-    AppState.jobAlerts = [];
-
-    AppState.notifications = [];
-
-    AppState.career = {
-        ...initialState.career
-    };
+  Object.assign(
+    AppState,
+    structuredClone(initialState)
+  );
 }
-
 
 /* =========================================================
-   AUTH STATE SYNC
-   ========================================================= */
+   INITIAL SYNC
+========================================================= */
 
-export function syncAuthState(session) {
-
-    if (!session) {
-
-        clearAuthState();
-
-        return;
-    }
-
-    setAuthState({
-
-        isAuthenticated: true,
-
-        role: session.role,
-
-        user: session.user
-    });
-}
+syncAuthState();
