@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="HireSphere — Find opportunities and build your future."
+    >
+
+    <title>HireSphere</title>
+
+    <!-- Design System -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <!-- Home Page -->
+    <link rel="stylesheet" href="css/pages/home.css">
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <!-- ==========================================
+             SIDEBAR
+        =========================================== -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-inner">
+
+                <!-- Logo -->
+                <div class="sidebar-logo">
+                    HireSphere
+                </div>
+
+                <!-- Navigation -->
+                <nav
+                    class="sidebar-nav"
+                    aria-label="Primary navigation"
+                >
+
+                    <a
+                        href="index.html"
+                        class="nav-item active"
+                    >
+                        <span class="nav-icon">⌂</span>
+                        <span class="nav-label">Home</span>
+                    </a>
+
+                    <a
+                        href="pages/jobs.html"
+                        class="nav-item"
+                    >
+                        <span class="nav-icon">⌕</span>
+                        <span class="nav-label">Find Jobs</span>
+                    </a>
+
+                    <a
+                        href="pages/companies.html"
+                        class="nav-item"
+                    >
+                        <span class="nav-icon">▦</span>
+                        <span class="nav-label">Companies</span>
+                    </a>
+
+                    <a
+                        href="pages/applications.html"
+                        class="nav-item"
+                    >
+                        <span class="nav-icon">▣</span>
+                        <span class="nav-label">Applications</span>
+                    </a>
+
+                    <a
+                        href="pages/saved-jobs.html"
+                        class="nav-item"
+                    >
+                        <span class="nav-icon">♡</span>
+                        <span class="nav-label">Saved Jobs</span>
+                    </a>
+
+                    <a
+                        href="pages/career.html"
+                        class="nav-item"
+                    >
+                        <span class="nav-icon">↗</span>
+                        <span class="nav-label">Career Tools</span>
+                    </a>
+
+                    <a
+                        href="pages/resume-builder.html"
+                        class="nav-item"
+                    >
+                        <span class="nav-icon">▤</span>
+                        <span class="nav-label">Resume Review</span>
+                    </a>
+
+                    <a
+                        href="pages/interview-prep.html"
+                        class="nav-item"
+                    >
+                        <span class="nav-icon">◉</span>
+                        <span class="nav-label">Interview Prep</span>
+                    </a>
+
+                    <a
+                        href="pages/job-alerts.html"
+                        class="nav-item"
+                    >
+                        <span class="nav-icon">♧</span>
+                        <span class="nav-label">Job Alerts</span>
+                    </a>
+
+                </nav>
+
+                <!-- Premium -->
+                <div class="sidebar-premium">
+
+                    <span class="premium-title">
+                        Go Premium
+                    </span>
+
+                    <p class="premium-text">
+                        Unlock exclusive insights,
+                        top jobs & career growth.
+                    </p>
+
+                    <button class="btn btn-primary btn-sm">
+                        Upgrade Now
+                    </button>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ==========================================
+             MAIN APPLICATION
+        =========================================== -->
+
+        <div class="app-main">
+
+            <!-- ======================================
+                 HEADER
+            ======================================= -->
+
+            <header class="app-header">
+
+                <div class="header-inner container">
+
+                    <!-- Mobile menu -->
+                    <button
+                        class="header-menu"
+                        id="menuToggle"
+                        aria-label="Open navigation"
+                    >
+                        ☰
+                    </button>
+
+                    <!-- Search -->
+                    <div class="header-search">
+
+                        <input
+                            type="search"
+                            class="input"
+                            placeholder="Search jobs, skills, companies..."
+                            aria-label="Search"
+                        >
+
+                    </div>
+
+                    <!-- Header actions -->
+                    <div class="header-actions">
+
+                        <button
+                            class="header-action"
+                            aria-label="Notifications"
+                        >
+                            ♧
+                        </button>
+
+                        <button
+                            class="header-action"
+                            aria-label="Saved jobs"
+                        >
+                            ♡
+                        </button>
+
+                        <button class="profile-button">
+
+                            <span class="avatar avatar-sm">
+                                A
+                            </span>
+
+                            <span class="profile-info">
+
+                                <strong>
+                                    Arjun Kumar
+                                </strong>
+
+                                <small>
+                                    Job Seeker
+                                </small>
+
+                            </span>
+
+                            <span>
+                               ⌄
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- ======================================
+                 PAGE CONTENT
+            ======================================= -->
+
+            <main class="page-content">
+
+                <div class="page-content-inner">
+
+                    <section class="hero">
+
+                        <div class="hero-content">
+
+                            <h1 class="display-text">
+                                Find Opportunities.
+                                <br>
+                                Build Your
+                                <span class="text-gradient">
+                                    Future.
+                                </span>
+                            </h1>
+
+                            <p class="section-description">
+                                Explore top companies and job
+                                opportunities that match your
+                                skills and ambitions.
+                            </p>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         GLOBAL JAVASCRIPT
+    =========================================== -->
+
+    <script type="module" src="js/app.js"></script>
+
+    <script type="module" src="js/home/home.js"></script>
+
+</body>
+
+</html>
