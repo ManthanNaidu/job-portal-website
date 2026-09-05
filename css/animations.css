@@ -1,0 +1,246 @@
+/* =========================================================
+   HIRESPHERE — ANIMATION SYSTEM
+   File: css/animations.css
+   ========================================================= */
+
+/* =========================================================
+   KEYFRAMES
+   ========================================================= */
+
+@keyframes hs-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes hs-fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes hs-fade-down {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes hs-scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes hs-pulse-soft {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.62;
+    }
+}
+
+@keyframes hs-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes hs-shimmer {
+    from {
+        background-position: -800px 0;
+    }
+
+    to {
+        background-position: 800px 0;
+    }
+}
+
+/* =========================================================
+   ANIMATION UTILITIES
+   ========================================================= */
+
+.animate-fade {
+    animation:
+        hs-fade-in
+        var(--hs-duration-slow)
+        var(--hs-ease)
+        both;
+}
+
+.animate-fade-up {
+    animation:
+        hs-fade-up
+        var(--hs-duration-slow)
+        var(--hs-ease)
+        both;
+}
+
+.animate-fade-down {
+    animation:
+        hs-fade-down
+        var(--hs-duration-slow)
+        var(--hs-ease)
+        both;
+}
+
+.animate-scale {
+    animation:
+        hs-scale-in
+        var(--hs-duration-normal)
+        var(--hs-ease)
+        both;
+}
+
+/* =========================================================
+   STAGGER
+   ========================================================= */
+
+.stagger > * {
+    animation:
+        hs-fade-up
+        500ms
+        var(--hs-ease)
+        both;
+}
+
+.stagger > *:nth-child(1) {
+    animation-delay: 50ms;
+}
+
+.stagger > *:nth-child(2) {
+    animation-delay: 100ms;
+}
+
+.stagger > *:nth-child(3) {
+    animation-delay: 150ms;
+}
+
+.stagger > *:nth-child(4) {
+    animation-delay: 200ms;
+}
+
+.stagger > *:nth-child(5) {
+    animation-delay: 250ms;
+}
+
+.stagger > *:nth-child(6) {
+    animation-delay: 300ms;
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.loading {
+    animation:
+        hs-pulse-soft
+        1.6s
+        ease-in-out
+        infinite;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+
+    border: 2px solid var(--hs-primary-soft);
+    border-top-color: var(--hs-primary);
+
+    border-radius: 50%;
+
+    animation:
+        hs-spin
+        700ms
+        linear
+        infinite;
+}
+
+/* =========================================================
+   SKELETON
+   ========================================================= */
+
+.skeleton {
+    position: relative;
+    overflow: hidden;
+
+    background: #F0EFF5;
+}
+
+.skeleton::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.65) 50%,
+            transparent 100%
+        );
+
+    background-size: 800px 100%;
+
+    animation:
+        hs-shimmer
+        1.6s
+        linear
+        infinite;
+}
+
+/* =========================================================
+   HOVER UTILITIES
+   ========================================================= */
+
+.hover-lift {
+    transition:
+        transform var(--hs-duration-normal) var(--hs-ease),
+        box-shadow var(--hs-duration-normal) var(--hs-ease);
+}
+
+.hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--hs-shadow-md);
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
