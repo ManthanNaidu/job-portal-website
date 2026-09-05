@@ -1,0 +1,229 @@
+/* =========================================================
+   HIRESPHERE — RESPONSIVE SYSTEM
+   File: css/responsive.css
+   ========================================================= */
+
+/* =========================================================
+   LARGE LAPTOPS / SMALL DESKTOPS
+   ========================================================= */
+
+@media (max-width: 1280px) {
+
+    :root {
+        --hs-sidebar-width: 176px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns:
+            minmax(0, 1fr)
+            320px;
+    }
+
+    .hero-content {
+        padding: var(--hs-space-10);
+    }
+}
+
+/* =========================================================
+   TABLET / SMALL LAPTOP
+   ========================================================= */
+
+@media (max-width: 1024px) {
+
+    :root {
+        --hs-sidebar-width: 76px;
+        --hs-content-padding: 20px;
+    }
+
+    .sidebar {
+        width: var(--hs-sidebar-collapsed-width);
+    }
+
+    .app-main {
+        width: calc(
+            100% - var(--hs-sidebar-collapsed-width)
+        );
+
+        margin-left: var(--hs-sidebar-collapsed-width);
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-aside {
+        position: static;
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    :root {
+        --hs-header-height: 64px;
+    }
+
+    .app-shell {
+        display: block;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .app-main {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .page-content {
+        padding: var(--hs-space-4);
+    }
+
+    .container {
+        width: min(
+            100% - 32px,
+            var(--hs-content-max-width)
+        );
+    }
+
+    .section {
+        padding-block: var(--hs-space-12);
+    }
+
+    .section-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .hero-content {
+        padding: var(--hs-space-8);
+    }
+
+    .grid-4,
+    .grid-3,
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .search-bar {
+        align-items: stretch;
+        flex-direction: column;
+        padding: var(--hs-space-3);
+    }
+
+    .search-action,
+    .search-action .btn {
+        width: 100%;
+    }
+
+    .job-card-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .data-table {
+        overflow-x: auto;
+    }
+
+    .modal-backdrop {
+        padding: var(--hs-space-4);
+    }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    :root {
+        --hs-space-6: 20px;
+        --hs-space-8: 28px;
+        --hs-space-12: 40px;
+    }
+
+    h1 {
+        font-size: 2.4rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    h3 {
+        font-size: 1.35rem;
+    }
+
+    .hero {
+        border-radius: var(--hs-radius-lg);
+    }
+
+    .hero-content {
+        padding: var(--hs-space-6);
+    }
+
+    .page-content {
+        padding: var(--hs-space-3);
+    }
+
+    .card-header,
+    .card-body,
+    .card-footer {
+        padding-inline: var(--hs-space-4);
+    }
+
+    .btn-lg {
+        width: 100%;
+    }
+
+    .data-table th,
+    .data-table td {
+        white-space: nowrap;
+    }
+
+    .modal {
+        border-radius: var(--hs-radius-lg);
+    }
+}
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .container {
+        width: min(
+            100% - 24px,
+            var(--hs-content-max-width)
+        );
+    }
+
+    .page-content {
+        padding: 12px;
+    }
+
+    .hero-content {
+        padding: 20px;
+    }
+
+    .search-bar {
+        border-radius: var(--hs-radius-md);
+    }
+}
