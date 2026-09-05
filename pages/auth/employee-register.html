@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Create your HireSphere employee account."
+  >
+
+  <title>Create Employee Account | HireSphere</title>
+
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/animations.css">
+  <link rel="stylesheet" href="../../css/pages/auth.css">
+  <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+
+<body class="auth-page">
+
+  <main class="auth-layout">
+
+    <!-- =====================================================
+         BRAND PANEL
+    ====================================================== -->
+
+    <section class="auth-brand-panel">
+
+      <div class="auth-brand-content">
+
+        <div class="auth-brand-logo">
+          <a href="../../index.html">
+            <strong>HireSphere</strong>
+          </a>
+        </div>
+
+        <h1 class="auth-brand-title">
+          Build your next
+          <span>career move.</span>
+        </h1>
+
+        <p class="auth-brand-description">
+          Create your professional profile, discover relevant
+          opportunities, understand your skill gaps and
+          accelerate your career with HireSphere.
+        </p>
+
+        <div class="auth-brand-features">
+
+          <div class="auth-brand-feature">
+            <span class="auth-brand-feature-icon">✓</span>
+            <span>Personalized job recommendations</span>
+          </div>
+
+          <div class="auth-brand-feature">
+            <span class="auth-brand-feature-icon">✓</span>
+            <span>Career and skill intelligence</span>
+          </div>
+
+          <div class="auth-brand-feature">
+            <span class="auth-brand-feature-icon">✓</span>
+            <span>Application and interview tracking</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =====================================================
+         FORM PANEL
+    ====================================================== -->
+
+    <section class="auth-form-panel">
+
+      <div class="auth-form-wrapper">
+
+        <header class="auth-form-header">
+
+          <h2 class="auth-form-title">
+            Create your account
+          </h2>
+
+          <p class="auth-form-description">
+            Start building your career profile on HireSphere.
+          </p>
+
+        </header>
+
+        <div
+          id="registerMessage"
+          class="auth-message"
+          aria-live="polite"
+        ></div>
+
+        <form
+          id="employeeRegisterForm"
+          class="auth-form"
+          novalidate
+        >
+
+          <!-- NAME -->
+
+          <div class="auth-form-group">
+
+            <label
+              class="auth-form-label"
+              for="name"
+            >
+              Full name
+            </label>
+
+            <input
+              class="auth-form-input"
+              id="name"
+              name="name"
+              type="text"
+              placeholder="Enter your full name"
+              autocomplete="name"
+              required
+            >
+
+          </div>
+
+          <!-- EMAIL -->
+
+          <div class="auth-form-group">
+
+            <label
+              class="auth-form-label"
+              for="email"
+            >
+              Email address
+            </label>
+
+            <input
+              class="auth-form-input"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            >
+
+          </div>
+
+          <!-- PHONE -->
+
+          <div class="auth-form-group">
+
+            <label
+              class="auth-form-label"
+              for="phone"
+            >
+              Phone number
+            </label>
+
+            <input
+              class="auth-form-input"
+              id="phone"
+              name="phone"
+              type="tel"
+              placeholder="+91 98765 43210"
+              autocomplete="tel"
+            >
+
+          </div>
+
+          <!-- LOCATION -->
+
+          <div class="auth-form-group">
+
+            <label
+              class="auth-form-label"
+              for="location"
+            >
+              Location
+            </label>
+
+            <input
+              class="auth-form-input"
+              id="location"
+              name="location"
+              type="text"
+              placeholder="Bengaluru, India"
+              autocomplete="address-level2"
+            >
+
+          </div>
+
+          <!-- PASSWORD -->
+
+          <div class="auth-form-group">
+
+            <label
+              class="auth-form-label"
+              for="password"
+            >
+              Password
+            </label>
+
+            <div class="auth-password-wrapper">
+
+              <input
+                class="auth-form-input"
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Minimum 8 characters"
+                autocomplete="new-password"
+                required
+              >
+
+              <button
+                class="auth-password-toggle"
+                id="passwordToggle"
+                type="button"
+                aria-label="Show password"
+              >
+                ◉
+              </button>
+
+            </div>
+
+          </div>
+
+          <!-- CONFIRM PASSWORD -->
+
+          <div class="auth-form-group">
+
+            <label
+              class="auth-form-label"
+              for="confirmPassword"
+            >
+              Confirm password
+            </label>
+
+            <div class="auth-password-wrapper">
+
+              <input
+                class="auth-form-input"
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                placeholder="Re-enter your password"
+                autocomplete="new-password"
+                required
+              >
+
+              <button
+                class="auth-password-toggle"
+                id="confirmPasswordToggle"
+                type="button"
+                aria-label="Show password"
+              >
+                ◉
+              </button>
+
+            </div>
+
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary auth-submit"
+          >
+            Create Account
+          </button>
+
+        </form>
+
+        <div class="auth-form-footer">
+          Already have an account?
+          <a
+            class="auth-link"
+            href="./employee-login.html"
+          >
+            Sign in
+          </a>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script
+    type="module"
+    src="../../js/auth/employee-register.js"
+  ></script>
+
+</body>
+</html>
