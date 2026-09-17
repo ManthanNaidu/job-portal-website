@@ -1,0 +1,797 @@
+/* =========================================================
+   HireSphere M3 — Jobs Listing
+   Bootstrap handles layout/utilities.
+   This file contains page-specific styling.
+   ========================================================= */
+
+
+/* =========================================================
+   1. ROOT VARIABLES & GLOBAL STYLES
+   ========================================================= */
+
+:root {
+    --hs-primary: #6d4aff;
+    --hs-primary-dark: #5638e8;
+    --hs-soft: #f3efff;
+    --hs-bg: #f7f8fc;
+    --hs-text: #17152b;
+    --hs-muted: #6d6980;
+    --hs-border: #e7e5ef;
+    --hs-success: #1fa774;
+    --hs-success-soft: #e9f8f2;
+    --hs-shadow: 0 10px 35px rgba(45, 31, 95, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--hs-bg);
+    color: var(--hs-text);
+    font-family:
+        Inter,
+        ui-sans-serif,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+a {
+    color: inherit;
+}
+
+
+/* =========================================================
+   2. HEADER & BRAND
+   ========================================================= */
+
+.hs-header {
+    z-index: 1000;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #121128;
+}
+
+.brand strong {
+    display: block;
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.brand small {
+    display: block;
+    color: var(--hs-muted);
+    font-size: 0.68rem;
+    margin-top: 4px;
+}
+
+.brand-mark {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    background: linear-gradient(135deg, #6d4aff, #f472b6);
+    display: grid;
+    place-items: center;
+    color: #fff;
+    box-shadow: 0 7px 18px rgba(109, 74, 255, 0.22);
+}
+
+.nav-link {
+    border-radius: 12px;
+    padding: 0.65rem 0.8rem;
+    color: #575269;
+    font-size: 0.86rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background: var(--hs-soft);
+    color: var(--hs-primary);
+}
+
+.icon-btn {
+    width: 40px;
+    height: 40px;
+}
+
+.avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #2e254d, #6d4aff);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+
+/* =========================================================
+   3. SEARCH HERO
+   ========================================================= */
+
+.search-hero {
+    padding: 52px 0 30px;
+    background: linear-gradient(
+        135deg,
+        #f1edff 0%,
+        #f9effa 50%,
+        #fff5e9 100%
+    );
+    border-bottom: 1px solid #eeeaf8;
+}
+
+.hero-copy {
+    max-width: 980px;
+    margin: 0 auto 26px;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--hs-primary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.hero-copy h1 {
+    font-size: clamp(2rem, 4vw, 3.6rem);
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+    margin: 10px 0 12px;
+    font-weight: 800;
+}
+
+.hero-copy h1 span {
+    background: linear-gradient(
+        90deg,
+        #6d4aff,
+        #a65bf0,
+        #f472b6
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-copy p {
+    color: var(--hs-muted);
+    max-width: 650px;
+    margin: 0;
+}
+
+
+/* =========================================================
+   4. SEARCH PANEL
+   ========================================================= */
+
+.search-panel {
+    max-width: 1240px;
+    margin: auto;
+    background: #fff;
+    padding: 10px;
+    border: 1px solid rgba(109, 74, 255, 0.12);
+    border-radius: 18px;
+    box-shadow: 0 14px 35px rgba(68, 48, 125, 0.12);
+}
+
+.search-field,
+.search-select {
+    height: 52px;
+}
+
+.search-field {
+    border: 1px solid var(--hs-border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.search-field .input-group-text {
+    background: #fff;
+    border: 0;
+    color: #7b7690;
+    padding-left: 16px;
+}
+
+.search-field .form-control {
+    border: 0;
+    box-shadow: none;
+}
+
+.search-select {
+    border-radius: 12px;
+    border-color: var(--hs-border);
+    padding-left: 14px;
+}
+
+.search-btn {
+    height: 52px;
+    border-radius: 12px;
+    background: var(--hs-primary);
+    border-color: var(--hs-primary);
+    font-weight: 700;
+}
+
+.search-btn:hover {
+    background: var(--hs-primary-dark);
+    border-color: var(--hs-primary-dark);
+}
+
+
+/* =========================================================
+   5. POPULAR SEARCHES
+   ========================================================= */
+
+.popular-row {
+    max-width: 1240px;
+    margin: 12px auto 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    color: #7c778d;
+    font-size: 0.78rem;
+}
+
+.popular-row button {
+    border: 0;
+    background: rgba(255, 255, 255, 0.72);
+    padding: 6px 10px;
+    border-radius: 999px;
+    color: #5c5671;
+}
+
+.popular-row button:hover {
+    color: var(--hs-primary);
+    background: #fff;
+}
+
+
+/* =========================================================
+   6. FILTER SIDEBAR
+   ========================================================= */
+
+.filter-card,
+.card-soft {
+    background: #fff;
+    border: 1px solid var(--hs-border);
+    border-radius: 18px;
+    box-shadow: var(--hs-shadow);
+}
+
+.filter-card {
+    padding: 18px;
+}
+
+.sticky-filter {
+    position: sticky;
+    top: 92px;
+}
+
+.filter-title {
+    font-size: 1.05rem;
+    margin: 4px 0 0;
+}
+
+.filter-group {
+    padding: 16px 0;
+    border-top: 1px solid #f0eef5;
+}
+
+.filter-group:first-child {
+    border-top: 0;
+    padding-top: 0;
+}
+
+.filter-label {
+    font-weight: 700;
+    font-size: 0.82rem;
+    margin-bottom: 10px;
+}
+
+.filter-options {
+    display: grid;
+    gap: 8px;
+}
+
+.filter-check {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.78rem;
+    color: #5d596d;
+}
+
+.filter-check label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.filter-check input {
+    accent-color: var(--hs-primary);
+}
+
+.count {
+    color: #a09bab;
+    font-size: 0.7rem;
+}
+
+.range-values {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.74rem;
+    color: #6f6a7f;
+    margin-bottom: 5px;
+}
+
+.form-range {
+    accent-color: var(--hs-primary);
+}
+
+.salary-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.salary-inputs .form-control {
+    font-size: 0.76rem;
+}
+
+
+/* =========================================================
+   7. RESULTS TOOLBAR
+   ========================================================= */
+
+.results-toolbar {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.results-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.results-muted {
+    font-size: 0.78rem;
+    color: #817b90;
+    margin: 4px 0 0;
+}
+
+.sort-select {
+    width: 190px;
+    font-size: 0.78rem;
+    border-color: var(--hs-border);
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   8. ACTIVE FILTER CHIPS
+   ========================================================= */
+
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--hs-soft);
+    color: var(--hs-primary-dark);
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+.filter-chip button {
+    border: 0;
+    background: none;
+    padding: 0;
+    color: inherit;
+}
+
+
+/* =========================================================
+   9. JOB LIST
+   ========================================================= */
+
+.jobs-list {
+    display: grid;
+    gap: 12px;
+}
+
+
+/* =========================================================
+   10. JOB CARD
+   ========================================================= */
+
+.job-card {
+    background: #fff;
+    border: 1px solid var(--hs-border);
+    border-radius: 16px;
+    padding: 18px;
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.job-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px rgba(46, 35, 91, 0.1);
+    border-color: #d8d1fb;
+}
+
+.job-top {
+    display: flex;
+    gap: 13px;
+}
+
+.company-logo {
+    width: 52px;
+    height: 52px;
+    flex: 0 0 52px;
+    border-radius: 14px;
+    object-fit: cover;
+}
+
+.job-main {
+    min-width: 0;
+    flex: 1;
+}
+
+.job-title {
+    font-size: 1rem;
+    font-weight: 800;
+    margin: 0 0 4px;
+}
+
+.job-title a:hover {
+    color: var(--hs-primary);
+}
+
+.company-name {
+    font-size: 0.79rem;
+    color: #676278;
+}
+
+.job-location {
+    font-size: 0.75rem;
+    color: #777286;
+    margin-top: 6px;
+}
+
+
+/* =========================================================
+   11. JOB ACTIONS
+   ========================================================= */
+
+.job-actions {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+}
+
+.save-btn {
+    width: 35px;
+    height: 35px;
+    border: 1px solid var(--hs-border);
+    border-radius: 10px;
+    color: #777286;
+    background: #fff;
+}
+
+.save-btn.saved {
+    color: var(--hs-primary);
+    background: var(--hs-soft);
+    border-color: #ddd5ff;
+}
+
+.match-pill {
+    background: var(--hs-success-soft);
+    color: var(--hs-success);
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 5px 8px;
+    border-radius: 999px;
+}
+
+
+/* =========================================================
+   12. JOB META
+   ========================================================= */
+
+.job-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 13px 0;
+}
+
+.job-meta span {
+    background: #f8f7fb;
+    color: #625d72;
+    border-radius: 7px;
+    padding: 5px 8px;
+    font-size: 0.69rem;
+}
+
+
+/* =========================================================
+   13. JOB SKILLS
+   ========================================================= */
+
+.job-skills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.skill-pill {
+    font-size: 0.68rem;
+    color: #5c5770;
+    border: 1px solid #e9e7ef;
+    padding: 5px 8px;
+    border-radius: 7px;
+    background: #fff;
+}
+
+
+/* =========================================================
+   14. JOB CARD FOOTER
+   ========================================================= */
+
+.job-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 14px;
+    padding-top: 13px;
+    border-top: 1px solid #f1eff5;
+}
+
+.salary {
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.posted {
+    font-size: 0.7rem;
+    color: #9993a4;
+}
+
+
+/* =========================================================
+   15. BUTTONS
+   ========================================================= */
+
+.btn-primary {
+    background: var(--hs-primary);
+    border-color: var(--hs-primary);
+}
+
+.btn-primary:hover {
+    background: var(--hs-primary-dark);
+    border-color: var(--hs-primary-dark);
+}
+
+.btn-outline-primary {
+    color: var(--hs-primary);
+    border-color: #d8d0ff;
+}
+
+.btn-outline-primary:hover {
+    background: var(--hs-soft);
+    color: var(--hs-primary-dark);
+    border-color: #cfc4ff;
+}
+
+
+/* =========================================================
+   16. EMPTY STATE
+   ========================================================= */
+
+.empty-state {
+    text-align: center;
+    background: #fff;
+    border: 1px dashed #d9d5e5;
+    border-radius: 18px;
+    padding: 70px 20px;
+}
+
+.empty-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
+    background: var(--hs-soft);
+    color: var(--hs-primary);
+    display: grid;
+    place-items: center;
+    margin: 0 auto 16px;
+    font-size: 1.5rem;
+}
+
+.empty-state h3 {
+    font-weight: 800;
+}
+
+.empty-state p {
+    color: var(--hs-muted);
+}
+
+
+/* =========================================================
+   17. PAGINATION
+   ========================================================= */
+
+.pagination .page-link {
+    border: 0;
+    color: #686276;
+    background: transparent;
+    margin: 0 2px;
+    border-radius: 9px;
+}
+
+.pagination .page-item.active .page-link {
+    background: var(--hs-primary);
+    color: #fff;
+}
+
+
+/* =========================================================
+   18. RECOMMENDED / MINI CARDS
+   ========================================================= */
+
+.section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 15px;
+}
+
+.section-heading h2 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin: 4px 0 0;
+}
+
+.mini-card {
+    height: 100%;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid var(--hs-border);
+    border-radius: 14px;
+}
+
+.mini-card .company-logo {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+}
+
+.mini-card h3 {
+    font-size: 0.88rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.mini-card p {
+    font-size: 0.72rem;
+    color: var(--hs-muted);
+    margin: 3px 0;
+}
+
+.mini-card .mini-salary {
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+
+/* =========================================================
+   19. MODAL & TOAST
+   ========================================================= */
+
+.modal-soft {
+    border: 0;
+    border-radius: 20px;
+    box-shadow: 0 25px 80px rgba(35, 25, 70, 0.18);
+}
+
+.apply-job-preview {
+    background: var(--hs-soft);
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.toast {
+    background: #fff;
+}
+
+
+/* =========================================================
+   20. OFFCANVAS FILTER
+   ========================================================= */
+
+.offcanvas {
+    max-width: 370px;
+}
+
+
+/* =========================================================
+   21. RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .search-hero {
+        padding-top: 34px;
+    }
+
+    .hero-copy h1 {
+        font-size: 2.25rem;
+    }
+
+    .job-card {
+        padding: 15px;
+    }
+
+    .job-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .job-bottom .btn {
+        width: 100%;
+    }
+
+    .results-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .sort-select {
+        width: 100%;
+    }
+
+    .brand small {
+        display: none;
+    }
+
+    .brand strong {
+        font-size: 1.15rem;
+    }
+
+    .company-logo {
+        width: 46px;
+        height: 46px;
+        flex-basis: 46px;
+    }
+}

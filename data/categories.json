@@ -1,1 +1,47 @@
-[] 
+[
+  {
+    "id": "business",
+    "name": "Business",
+    "count": 7
+  },
+  {
+    "id": "data-science",
+    "name": "Data Science",
+    "count": 16
+  },
+  {
+    "id": "design",
+    "name": "Design",
+    "count": 16
+  },
+  {
+    "id": "engineering",
+    "name": "Engineering",
+    "count": 68
+  },
+  {
+    "id": "human-resources",
+    "name": "Human Resources",
+    "count": 7
+  },
+  {
+    "id": "marketing",
+    "name": "Marketing",
+    "count": 14
+  },
+  {
+    "id": "product",
+    "name": "Product",
+    "count": 8
+  },
+  {
+    "id": "security",
+    "name": "Security",
+    "count": 7
+  },
+  {
+    "id": "support",
+    "name": "Support",
+    "count": 7
+  }
+]
